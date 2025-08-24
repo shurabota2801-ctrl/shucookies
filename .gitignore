@@ -1,3 +1,11 @@
 /venv
+static/
 __pycache__/
 .env
+
+media/
+*.jpg
+*.png
+*.gif
+*.jpeg
+*.webp
