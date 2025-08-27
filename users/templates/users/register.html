@@ -1,11 +1,104 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
     <title>Регистрация</title>
-  </head>
-  <body>
+</head>
+<body>
     <h1>Регистрация</h1>
-    <p>...</p>
-  </body>
-</html> 
+    
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div>
+            <label for="id_username">Имя пользователя:</label>
+            <input type="text" name="username" id="id_username" required>
+            {% if form.username.errors %}
+                <div>{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" id="id_email">
+            {% if form.email.errors %}
+                <div>{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="id_password1">Пароль:</label>
+            <input type="password" name="password1" id="id_password1" required>
+            {% if form.password1.errors %}
+                <div>{{ form.password1.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="id_password2">Подтверждение пароля:</label>
+            <input type="password" name="password2" id="id_password2" required>
+            {% if form.password2.errors %}
+                <div>{{ form.password2.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="id_bio">Биография:</label>
+            <textarea name="bio" id="id_bio" rows="4" cols="50"></textarea>
+            {% if form.bio.errors %}
+                <div>{{ form.bio.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="id_avatar">Аватар:</label>
+            <input type="file" name="avatar" id="id_avatar">
+            {% if form.avatar.errors %}
+                <div>{{ form.avatar.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="id_experience">Опыт (лет):</label>
+            <input type="number" name="experience" id="id_experience" value="0">
+            {% if form.experience.errors %}
+                <div>{{ form.experience.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    
+    <p>Уже есть аккаунт? <a href="{% url 'users:login' %}">Войти</a></p>
+</body>
+</html>
+<!--
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body>
+    <h1>Регистрация</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+        
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    
+    <p>Уже есть аккаунт? <a href="{% url 'users:login' %}">Войти</a></p>
+</body>
+</html>
+-->
