@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Категории рецептов</title>
+</head>
+<body>
+    <h1>Категории рецептов</h1>
+
+    <nav>
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="{% url 'categories:category_detail' category.id %}">
+                        {{ category.name }}
+                    </a>
+                    ({{ category.recipe_set.count }} рецептов)
+                </li>
+            {% empty %}
+                <p>Нет категорий</p>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <a href="{% url 'home' %}">Вернуться на главную</a>
+</body>
+</html>
+

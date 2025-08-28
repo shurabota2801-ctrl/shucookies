@@ -1,0 +1,33 @@
+<!-- recipes/templates/recipes/recipe_detail.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ recipe.title }}</title>
+</head>
+<body>
+    <h1>{{ recipe.title }}</h1>
+    
+    {% if recipe.image %}
+    <img src="{{ recipe.image.url }}" class="recipe-image" width="400">
+    {% else %}
+    <p>Нет изображения</p>
+    {% endif %}
+    
+    <p><strong>Категория:</strong> {{ recipe.category.name }}</p>
+    <p><strong>Описание:</strong> {{ recipe.description }}</p>
+    
+    <h2>Ингредиенты</h2>
+    <ul>
+        {% for ingredient in recipe.ingredients.all %}
+            <li>{{ ingredient }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Инструкция приготовления</h2>
+    <p>{{ recipe.instructions }}</p>
+    
+    <a href="{% url 'categories:categories_list' %}">Назад к списку категорий</a>
+        <a href="{% url 'home' %}">На главную</a>
+</body>
+</html>

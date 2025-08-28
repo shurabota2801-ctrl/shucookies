@@ -17,10 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users import views
-from users.views import home_view  
+from users.views import home_view
+from django.conf import settings
+from django.conf.urls.static import static  
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_view, name='home'),
     path('users/', include('users.urls')),
+    path('categories/', include('categories.urls', namespace='categories')),
+    path('recipes/', include('recipes.urls', namespace='recipes')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Категория: {{ category.name }}</title>
+</head>
+<body>
+    <h1>{{ category.name }}</h1>
+    <p>{{ category.description }}</p>
+
+    <h2>Рецепты в категории ({{ category.recipe_set.count }})</h2>
+    
+    {% if recipes %}
+        {% for recipe in recipes %}
+            <div class="recipe">
+                <h2>{{ recipe.title }}</h2>
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" class="recipe-image" width="200">
+                {% else %}
+                    <p>Нет изображения</p>
+                {% endif %}
+
+                <p><strong>Описание:</strong> {{ recipe.description }}</p>
+                
+                <h3>Ингредиенты:</h3>
+                <ul>
+                    {% for ingredient in recipe.ingredients.all %}
+                        <li>{{ ingredient }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <h3>Шаги приготовления:</h3>
+                <ol>
+                    {% for step in recipe.steps.all %}
+                        <li>
+                            {% if step.image %}
+                                <img src="{{ step.image.url }}" 
+                                     class="step-image" 
+                                     width="150">
+                            {% else %}
+                                <div class="no-image">Нет изображения</div>
+                            {% endif %}
+                            <p>{{ step.description }}</p>
+                        </li>
+                    {% endfor %}
+                </ol>
+                
+                <p><em>Добавлено: {{ recipe.created_at }}</em></p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>В категории нет рецептов</p>
+    {% endif %}
+
+    <div>
+        <a href="{% url 'categories:categories_list' %}">Назад к списку категорий</a>
+        <a href="{% url 'home' %}">На главную</a>
+    </div>
+</body>
+</html>
+
