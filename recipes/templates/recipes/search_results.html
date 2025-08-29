@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<h2>Результаты поиска по запросу "{{ query }}"</h2>
+
+{% if recipes %}
+    <div class="search-results">
+        {% for recipe in recipes %}
+            <div class="recipe-item">
+                <a href="{% url 'categories:recipe_detail' recipe.id %}">
+                    <h3>{{ recipe.title }}</h3>
+                </a>
+                
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" width="400" alt="{{ recipe.title }}" class="recipe-image">
+                {% else %}
+                    <p>Нет изображения</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Ничего не найдено</p>
+{% endif %}
+{% endblock %}
+

@@ -1,39 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Главная страница</title>
-</head>
-<body>
-    <h1>Добро пожаловать на сайт!</h1>
-    
-    {% if user.is_authenticated %}
-        <p>Вы вошли как: <strong>{{ user.username }}</strong></p>
-        <a href="{% url 'users:profile' %}">Мой профиль</a>
-        <a href="{% url 'users:profile_edit' %}">Редактировать профиль</a>
-        <a href="{% url 'categories:categories_list' %}">Категории</a>
-        <a href="{% url 'users:logout' %}">Выйти</a>
-    {% else %}
-        <a href="{% url 'users:login' %}">Войти</a>
-        <a href="{% url 'users:register' %}">Зарегистрироваться</a>
-        
-    {% endif %}
-    <h1>Список новых рецептов</h1>
-    
-{% for recipe in recipes %}
-    <div class="recipe">
-        <a href="{% url 'categories:recipe_detail' recipe.id %}">
-            <h2>{{ recipe.title }}</h2>
-        </a>
-        
-        {% if recipe.image %}
-            <img src="{{ recipe.image.url }}" 
-                class="recipe-image" 
-                width="200">
-        {% else %}
-            <p>Нет изображения</p>
-        {% endif %} 
-    </div>
-{% endfor %}
+{% extends 'users/base.html' %}
 
-</body>
-</html>
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <h1>Добро пожаловать на сайт!</h1>
+
+    <h2>Список новых рецептов</h2>
+    
+    {% for recipe in recipes %}
+        <div class="recipe">
+            <a href="{% url 'categories:recipe_detail' recipe.id %}">
+                <h3>{{ recipe.title }}</h3>
+            </a>
+            
+            {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" 
+                     class="recipe-image" 
+                     width="400">
+            {% else %}
+                <p>Нет изображения</p>
+            {% endif %} 
+        </div>
+    {% endfor %}
+{% endblock %}

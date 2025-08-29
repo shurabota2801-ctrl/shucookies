@@ -1,33 +1,47 @@
-<!-- recipes/templates/recipes/recipe_detail.html -->
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ recipe.title }}</title>
-</head>
-<body>
-    <h1>{{ recipe.title }}</h1>
-    
-    {% if recipe.image %}
-    <img src="{{ recipe.image.url }}" class="recipe-image" width="400">
-    {% else %}
-    <p>Нет изображения</p>
-    {% endif %}
-    
-    <p><strong>Категория:</strong> {{ recipe.category.name }}</p>
-    <p><strong>Описание:</strong> {{ recipe.description }}</p>
-    
-    <h2>Ингредиенты</h2>
-    <ul>
-        {% for ingredient in recipe.ingredients.all %}
-            <li>{{ ingredient }}</li>
+{% extends 'users/base.html' %}
+
+{% block title %}{{ recipe.title }}{% endblock %}
+
+{% block content %}
+    <div class="recipe-detail">
+        <li><a href="{% url 'categories:category_detail' recipe.category.id %}">К рецептам в категории</a></li>
+        <div class="recipe-header">
+            <h1>{{ recipe.title }}</h1>
+        </div>
+
+        {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" class="recipe-image" width="400">
+        {% else %}
+            <p>Нет изображения</p>
+        {% endif %}
+
+        <div class="recipe-info">
+            <p><strong>Категория:</strong> {{ recipe.category.name }}</p>
+            <p><strong>Описание:</strong> {{ recipe.description }}</p>
+        </div>
+
+        <h2>Ингредиенты</h2>
+        <ul class="ingredients-list">
+            {% for ingredient in recipe.ingredients.all %}
+                <li>{{ ingredient }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Инструкция приготовления</h2>
+        
+        {% for step in recipe.steps.all %}
+            <div class="cooking-step">
+                <h3>Шаг {{ step.step_number }}:</h3>
+                <p>{{ step.description }}</p>
+                
+                {% if step.image %}
+                    <img src="{{ step.image.url }}" width="400" alt="Шаг {{ step.step_number }}">
+                {% endif %}
+            </div>
         {% endfor %}
-    </ul>
-    
-    <h2>Инструкция приготовления</h2>
-    <p>{{ recipe.instructions }}</p>
-    
-    <a href="{% url 'categories:categories_list' %}">Назад к списку категорий</a>
-        <a href="{% url 'home' %}">На главную</a>
-</body>
-</html>
+
+        <p class="created-at"><em>Добавлено: {{ recipe.created_at }}</em></p>
+    </div>
+{% endblock %}
+
+

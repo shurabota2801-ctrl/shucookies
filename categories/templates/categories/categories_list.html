@@ -1,29 +1,33 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Категории рецептов</title>
-</head>
-<body>
-    <h1>Категории рецептов</h1>
+{% extends 'users/base.html' %}
 
-    <nav>
-        <ul>
-            {% for category in categories %}
-                <li>
-                    <a href="{% url 'categories:category_detail' category.id %}">
-                        {{ category.name }}
-                    </a>
-                    ({{ category.recipe_set.count }} рецептов)
-                </li>
-            {% empty %}
-                <p>Нет категорий</p>
-            {% endfor %}
-        </ul>
-    </nav>
+{% block title %}Категории рецептов{% endblock %}
 
-    <a href="{% url 'home' %}">Вернуться на главную</a>
-</body>
-</html>
+{% block content %}
+    <div class="categories-container">
+        <h1 class="page-title">Категории рецептов</h1>
 
+        <nav class="category-navigation">
+            <ul class="category-list">
+                {% for category in categories %}
+                    <li class="category-item">
+                        <a href="{% url 'categories:category_detail' category.id %}" class="category-link">
+                            {{ category.name }}
+                        </a>
+                        <span class="recipe-count">
+                            ({{ category.recipe_set.count }} рецепта)
+                        </span>
+                    </li>
+                    {% if category.image %}
+                        <img src="{{ category.image.url }}" width="400" alt="{{ category.name }}" class="category-image">
+                    {% else %}
+                        <p>Нет изображения</p>
+                    {% endif %}
+                {% empty %}
+                    <li class="no-categories">
+                        <p>Нет категорий</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}

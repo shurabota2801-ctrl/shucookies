@@ -7,7 +7,7 @@ from recipes.models import Recipe
 from recipes.models import Ingredient
 
 def home_view(request):
-    recipes = Recipe.objects.all().order_by('-created_at')
+    recipes = Recipe.objects.all().order_by('-created_at')[:3]
     return render(request, 'users/home.html', {'recipes': recipes})
 
 def register_view(request):
