@@ -27,6 +27,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('categories/', include('categories.urls', namespace='categories')),
     path('recipes/', include('recipes.urls', namespace='recipes')),
+    path('ratings/', include(('ratings.urls', 'ratings'))),
 ]
 
 if settings.DEBUG:

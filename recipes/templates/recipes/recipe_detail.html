@@ -42,6 +42,31 @@
 
         <p class="created-at"><em>Добавлено: {{ recipe.created_at }}</em></p>
     </div>
+    <!-- Форма добавления отзыва -->
+    {% if user.is_authenticated %}
+        <h3>Оставить отзыв</h3>
+        <form method="post" action="{% url 'ratings:add_rating' recipe_id=recipe.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Отправить</button>
+        </form>
+    {% else %}
+        <p>Для оставления отзыва войдите в систему</p>
+    {% endif %}
+    <h3>Отзывы</h3>
+    {% if ratings %}
+        <div class="ratings">
+            {% for rating in ratings %}
+                <div class="rating">
+                    <strong>{{ rating.user.username }}</strong>: {{ rating.rating }} звезд
+                    <p>{{ rating.comment }}</p>
+                    <small>{{ rating.created_at }}</small>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Отзывов пока нет</p>
+    {% endif %}
 {% endblock %}
 
 
