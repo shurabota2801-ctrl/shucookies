@@ -9,7 +9,7 @@
     
     {% for recipe in recipes %}
         <div class="recipe">
-            <a href="{% url 'categories:recipe_detail' recipe.id %}">
+            <a href="{% url 'recipes:recipe_detail' recipe.id %}">
                 <h3>{{ recipe.title }}</h3>
             </a>
             

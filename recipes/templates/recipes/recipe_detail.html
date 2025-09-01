@@ -42,7 +42,6 @@
 
         <p class="created-at"><em>Добавлено: {{ recipe.created_at }}</em></p>
     </div>
-    <!-- Форма добавления отзыва -->
     {% if user.is_authenticated %}
         <h3>Оставить отзыв</h3>
         <form method="post" action="{% url 'ratings:add_rating' recipe_id=recipe.id %}">
